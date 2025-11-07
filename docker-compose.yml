@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: financeiro-db
+    environment:
+      POSTGRES_DB: financeiro_db
+      POSTGRES_USER: financeiro_user
+      POSTGRES_PASSWORD: financeiro_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - financeiro-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U financeiro_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: financeiro-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/financeiro_db
+      SPRING_DATASOURCE_USERNAME: financeiro_user
+      SPRING_DATASOURCE_PASSWORD: financeiro_pass
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - financeiro-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: financeiro-frontend
+    environment:
+      VITE_API_URL: http://localhost:8080/api
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - financeiro-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  financeiro-network:
+    driver: bridge
