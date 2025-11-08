@@ -1,3 +1,5 @@
+package com.financeiro.financeiro_pessoal_backend.config;
+
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
