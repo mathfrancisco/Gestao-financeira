@@ -18,9 +18,13 @@ public interface UsuarioMapper {
     @Mapping(target = "categorias", ignore = true)
     Usuario toEntity(RegisterRequestDTO dto);
 
+    /**
+     * Converte Usuario entity para DTO de resposta
+     * ATENÇÃO: Método renomeado de toDTO para toDto (padrão Java)
+     */
     @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "updatedAt", source = "updatedAt")
-    UsuarioResponseDTO toDTO(Usuario entity);
+    UsuarioResponseDTO toDto(Usuario entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)

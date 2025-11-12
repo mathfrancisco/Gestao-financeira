@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +37,9 @@ public class MetaResponseDTO {
     private String observacoes;
     private Boolean concluida;
     private Boolean vencida;
+
+    // Lista de transações (opcional)
+    private List<TransacaoMetaResponseDTO> transacoes;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;

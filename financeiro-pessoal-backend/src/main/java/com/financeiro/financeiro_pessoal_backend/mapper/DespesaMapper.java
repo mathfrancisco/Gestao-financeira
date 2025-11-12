@@ -8,12 +8,19 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DespesaMapper {
 
+    /**
+     * Converte DTO de request para entity
+     */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "receita", ignore = true)
     @Mapping(target = "categoria", ignore = true)
     Despesa toEntity(DespesaRequestDTO dto);
 
+    /**
+     * Converte entity para DTO de response
+     * ATENÇÃO: Método renomeado de toDTO para toDto (padrão Java)
+     */
     @Mapping(target = "usuarioId", source = "usuario.id")
     @Mapping(target = "usuarioNome", source = "usuario.nome")
     @Mapping(target = "receitaId", source = "receita.id")
@@ -22,12 +29,16 @@ public interface DespesaMapper {
     @Mapping(target = "statusParcela", expression = "java(entity.getStatusParcela())")
     @Mapping(target = "parcelado", expression = "java(entity.isParcelado())")
     @Mapping(target = "vencido", expression = "java(entity.isVencido())")
-    DespesaResponseDTO toDTO(Despesa entity);
+    DespesaResponseDTO toDto(Despesa entity);
 
+    /**
+     * Atualiza entity existente com dados do DTO
+     * Usado no método update
+     */
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "receita", ignore = true)
     @Mapping(target = "categoria", ignore = true)
-    void updateEntityFromDTO(DespesaRequestDTO dto, @MappingTarget Despesa entity);
+    void updateEntityFromDto(DespesaRequestDTO dto, @MappingTarget Despesa entity);
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -14,48 +15,58 @@ import java.util.List;
 @AllArgsConstructor
 public class DashboardResponseDTO {
 
+    // Período
+    private Integer mes;
+    private Integer ano;
+    private String periodo;
+
+    // Receitas
     private BigDecimal totalReceitas;
+    private BigDecimal mediaReceitasMensal;
+
+    // Despesas
     private BigDecimal totalDespesas;
+    private BigDecimal totalDespesasPagas;
+    private BigDecimal totalDespesasPendentes;
+    private BigDecimal mediaDespesasMensal;
+    private Long countDespesasPagas;
+    private Long countDespesasPendentes;
+
+    // Saldos
     private BigDecimal saldo;
-    private BigDecimal despesasPagas;
-    private BigDecimal despesasPendentes;
-    private Integer totalMetas;
-    private Integer metasConcluidas;
-    private BigDecimal progressoMetas;
+    private BigDecimal saldoDisponivel;
 
-    private List<DespesaPorCategoriaDTO> despesasPorCategoria;
-    private List<EvolucaoMensalDTO> evolucaoMensal;
-    private List<MetaResumoDTO> topMetas;
+    // Percentuais
+    private BigDecimal percentualGasto;
+    private BigDecimal percentualEconomizado;
+    private BigDecimal taxaPagamento;
 
+    // Despesas por categoria
+    private Map<String, BigDecimal> despesasPorCategoria;
+    private List<CategoriaResumo> topCategorias;
+
+    // Metas
+    private BigDecimal valorObjetivoMetas;
+    private BigDecimal valorAtualMetas;
+    private BigDecimal valorRestanteMetas;
+    private BigDecimal totalEconomizado;
+    private BigDecimal progressoMedioMetas;
+    private Long countMetasEmAndamento;
+    private Long countMetasConcluidas;
+    private Long countMetasVencidas;
+
+    // Categorias
+    private Long totalCategorias;
+    private Long categoriasAtivas;
+
+    // DTO interno para resumo de categoria
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DespesaPorCategoriaDTO {
-        private String categoria;
+    public static class CategoriaResumo {
+        private String nome;
         private BigDecimal valor;
         private BigDecimal percentual;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class EvolucaoMensalDTO {
-        private String mes;
-        private BigDecimal receitas;
-        private BigDecimal despesas;
-        private BigDecimal saldo;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class MetaResumoDTO {
-        private String nome;
-        private BigDecimal valorObjetivo;
-        private BigDecimal valorAtual;
-        private BigDecimal progresso;
     }
 }

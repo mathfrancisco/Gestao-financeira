@@ -1,6 +1,7 @@
 package com.financeiro.financeiro_pessoal_backend.model;
 
-import com.financeiro.model.enums.TipoCategoria;
+
+import com.financeiro.financeiro_pessoal_backend.model.enums.TipoCategoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

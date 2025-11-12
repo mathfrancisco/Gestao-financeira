@@ -1,6 +1,5 @@
 package com.financeiro.financeiro_pessoal_backend.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -18,26 +17,22 @@ import java.time.LocalDate;
 public class ReceitaRequestDTO {
 
     @NotNull(message = "Período inicial é obrigatório")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate periodoInicio;
 
     @NotNull(message = "Período final é obrigatório")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate periodoFim;
 
+    @PositiveOrZero(message = "Dias úteis deve ser positivo ou zero")
     private Integer diasUteis;
 
     @PositiveOrZero(message = "Salário deve ser positivo ou zero")
-    @Builder.Default
-    private BigDecimal salario = BigDecimal.ZERO;
+    private BigDecimal salario;
 
     @PositiveOrZero(message = "Auxílios devem ser positivos ou zero")
-    @Builder.Default
-    private BigDecimal auxilios = BigDecimal.ZERO;
+    private BigDecimal auxilios;
 
     @PositiveOrZero(message = "Serviços extras devem ser positivos ou zero")
-    @Builder.Default
-    private BigDecimal servicosExtras = BigDecimal.ZERO;
+    private BigDecimal servicosExtras;
 
     private String observacoes;
 }

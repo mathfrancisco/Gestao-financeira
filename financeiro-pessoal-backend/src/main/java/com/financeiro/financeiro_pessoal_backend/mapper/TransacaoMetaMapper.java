@@ -10,12 +10,19 @@ import java.time.LocalDateTime;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = LocalDateTime.class)
 public interface TransacaoMetaMapper {
 
+    /**
+     * Converte DTO de aporte para entity
+     */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "meta", ignore = true)
     @Mapping(target = "data", expression = "java(LocalDateTime.now())")
     TransacaoMeta toEntity(AporteMetaRequestDTO dto);
 
+    /**
+     * Converte entity para DTO de response
+     * ATENÇÃO: Método renomeado de toDTO para toDto (padrão Java)
+     */
     @Mapping(target = "metaId", source = "meta.id")
     @Mapping(target = "metaNome", source = "meta.nome")
-    TransacaoMetaResponseDTO toDTO(TransacaoMeta entity);
+    TransacaoMetaResponseDTO toDto(TransacaoMeta entity);
 }

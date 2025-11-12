@@ -1,3 +1,4 @@
+
 package com.financeiro.financeiro_pessoal_backend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,9 +37,13 @@ public class ReceitaResponseDTO {
     private BigDecimal saldo;
     private String observacoes;
 
+    // Lista de despesas (opcional, para evitar N+1)
+    private List<DespesaResumoDTO> despesas;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
+
 }

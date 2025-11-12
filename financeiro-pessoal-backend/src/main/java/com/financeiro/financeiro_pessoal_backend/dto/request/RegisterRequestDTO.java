@@ -22,6 +22,9 @@ public class RegisterRequestDTO {
     @Size(min = 6, max = 50, message = "Senha deve ter entre 6 e 50 caracteres")
     private String senha;
 
+    @NotBlank(message = "Confirmação de senha é obrigatória")
+    private String confirmacaoSenha;
+
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     private String nome;
