@@ -42,6 +42,18 @@ public class SecurityUtil {
     }
 
     /**
+     * Retorna o ID do usuário para uso em SpEL (cache keys)
+     * Método auxiliar que evita exceção quando não há usuário autenticado
+     */
+    public Long getUsuarioIdForCache() {
+        try {
+            return getUsuarioLogadoId();
+        } catch (Exception e) {
+            return 0L; // Retorna 0 se não autenticado (não deve acontecer em métodos autenticados)
+        }
+    }
+
+    /**
      * Retorna o email do usuário autenticado
      */
     public String getEmailUsuarioLogado() {

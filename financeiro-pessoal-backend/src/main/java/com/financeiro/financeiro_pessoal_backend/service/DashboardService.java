@@ -37,7 +37,7 @@ public class DashboardService {
      * Retorna dados consolidados do dashboard
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'geral_' + #mes + '_' + #ano + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "dashboard", key = "'geral_' + #mes + '_' + #ano + '_' + @securityUtil.usuarioLogadoId")
     public DashboardResponseDTO getDashboard(Integer mes, Integer ano) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.info("Gerando dashboard para usuário {} - Mês: {}, Ano: {}", usuarioId, mes, ano);
@@ -157,7 +157,7 @@ public class DashboardService {
      * Retorna total de receitas do período
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'receitas_' + #inicio + '_' + #fim + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "dashboard", key = "'receitas_' + #inicio + '_' + #fim + '_' + @securityUtil.usuarioLogadoId")
     public BigDecimal getTotalReceitas(LocalDate inicio, LocalDate fim) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Calculando total de receitas - Período: {} a {}", inicio, fim);
@@ -173,7 +173,7 @@ public class DashboardService {
      * Retorna total de despesas do período
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'despesas_' + #inicio + '_' + #fim + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "dashboard", key = "'despesas_' + #inicio + '_' + #fim + '_' + @securityUtil.usuarioLogadoId")
     public BigDecimal getTotalDespesas(LocalDate inicio, LocalDate fim) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Calculando total de despesas - Período: {} a {}", inicio, fim);
@@ -189,7 +189,7 @@ public class DashboardService {
      * Retorna saldo atual
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'saldo_' + #root.target.securityUtil.usuarioLogadoId", unless = "#result == null")
+    @Cacheable(value = "dashboard", key = "'saldo_' +  @securityUtil.usuarioLogadoId", unless = "#result == null")
     public Map<String, BigDecimal> getSaldo() {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Calculando saldo do usuário: {}", usuarioId);
@@ -293,7 +293,7 @@ public class DashboardService {
      * Evolução dos últimos N meses
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'evolucao_' + #meses + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "dashboard", key = "'evolucao_' + #meses + '_' +  @securityUtil.usuarioLogadoId")
     public List<Map<String, Object>> getEvolucao(int meses) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Gerando evolução dos últimos {} meses", meses);
@@ -333,7 +333,7 @@ public class DashboardService {
      * Top N categorias mais gastas
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "dashboard", key = "'top_categorias_' + #limite + '_' + #mes + '_' + #ano + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "dashboard", key = "'top_categorias_' + #limite + '_' + #mes + '_' + #ano + '_' +  @securityUtil.usuarioLogadoId")
     public List<Map<String, Object>> getTopCategorias(int limite, Integer mes, Integer ano) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Buscando top {} categorias", limite);

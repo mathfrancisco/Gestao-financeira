@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos
                         .requestMatchers(
+                                "/auth/**",
                                 "/api/auth/**",
                                 "/api-docs/**",
                                 "/swagger-ui/**",
@@ -45,13 +46,14 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/actuator/**",
                                 "/actuator/health/**",
-                                "/actuator/info/**"
+                                "/actuator/info/**",
+                                "/error"  // Adicione /error aqui
                         ).permitAll()
                         // Endpoints do admin
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // Todos os outros endpoints requerem autenticação
                         .anyRequest().authenticated()
-                )
+                )  // ✅ Fecha corretamente authorizeHttpRequests
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

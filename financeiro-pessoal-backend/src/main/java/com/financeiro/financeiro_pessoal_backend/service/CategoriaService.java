@@ -108,7 +108,7 @@ public class CategoriaService {
      * Lista todas as categorias do usuário
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "categorias", key = "'usuario_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "categorias", key = "'usuario_' + @securityUtil.usuarioLogadoId")
     public List<CategoriaResponseDTO> findAllByUsuario() {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Listando categorias do usuário: {}", usuarioId);
