@@ -10,6 +10,9 @@ import {DashboardPage} from "../components/dashboard/Dashboard.tsx";
 import {LandingPage} from "../components/landingpage/LandingPage.tsx";
 import {ReceitasList} from "../components/receitas/ReceitasList.tsx";
 import {DespesasList} from "../components/despesas/DespesasList.tsx";
+import { MetaDetail } from "../components/meta/MetaDetail.tsx";
+import {MetasList} from "../components/meta/MetasList.tsx";
+import {ParametrosList} from "../components/parametros/ParametrosList.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -75,22 +78,24 @@ export const AppRoutes = () => {
                     path="/metas"
                     element={
                         <ProtectedRoute>
-                            <div className="p-8">
-                                <h1 className="text-2xl font-bold">Metas</h1>
-                                <p className="text-gray-600">Página em desenvolvimento...</p>
-                            </div>
+                            <MetasList />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/metas/:id"
+                    element={
+                        <ProtectedRoute>
+                            <MetaDetail />
                         </ProtectedRoute>
                     }
                 />
 
                 <Route
-                    path="/metas/nova"
+                    path="/parametros"
                     element={
                         <ProtectedRoute>
-                            <div className="p-8">
-                                <h1 className="text-2xl font-bold">Nova Meta</h1>
-                                <p className="text-gray-600">Página em desenvolvimento...</p>
-                            </div>
+                            <ParametrosList />
                         </ProtectedRoute>
                     }
                 />
