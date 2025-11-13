@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from 'react';
 
 import { Sidebar } from './Sidebar';
-import { Footer } from './Footer';
+
 import {Header} from "./Header.tsx";
 
 interface LayoutProps {
@@ -15,7 +15,6 @@ interface LayoutProps {
 export const Layout = ({
                            children,
                            showSidebar = true,
-                           showFooter = true
                        }: LayoutProps) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -51,9 +50,6 @@ export const Layout = ({
                     </div>
                 </main>
             </div>
-
-            {/* Footer */}
-            {showFooter && <Footer />}
         </div>
     );
 };

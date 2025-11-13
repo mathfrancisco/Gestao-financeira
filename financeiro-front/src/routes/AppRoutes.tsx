@@ -7,7 +7,7 @@ import { ProfilePage } from '../components/auth/ProfilePage';
 import { CategoriasList } from '../components/categorias/CategoriasList';
 import { ProtectedRoute } from '../components/common/ProtectedRoute';
 import {DashboardPage} from "../components/dashboard/Dashboard.tsx";
-import {LandingPage} from "../components/landingpage/LandingPage.tsx";
+import LandingPage from "../components/landingpage/LandingPage.tsx";
 import {ReceitasList} from "../components/receitas/ReceitasList.tsx";
 import {DespesasList} from "../components/despesas/DespesasList.tsx";
 import { MetaDetail } from "../components/meta/MetaDetail.tsx";

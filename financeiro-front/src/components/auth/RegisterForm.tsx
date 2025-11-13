@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Lock, User, UserPlus, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { Loading } from '../common/Loading';
+import {NavbarLp} from "../landingpage/NavbarLp.tsx";
 
 const registerSchema = z
     .object({
@@ -83,6 +84,7 @@ export const RegisterForm = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+            <NavbarLp/>
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
