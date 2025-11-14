@@ -40,12 +40,13 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     List<Receita> findByUsuarioIdWithDespesas(@Param("usuarioId") Long usuarioId);
 
     /**
-     * Busca receitas por período
+     * Busca receitas que tenham interseção com o período informado
+     * Exemplo: Receita CLT de 21/10 a 20/11 será retornada tanto no dashboard de outubro quanto novembro
      */
     @Query("SELECT r FROM Receita r " +
             "WHERE r.usuario.id = :usuarioId " +
-            "AND r.periodoInicio >= :inicio " +
-            "AND r.periodoFim <= :fim " +
+            "AND r.periodoFim >= :inicio " +
+            "AND r.periodoInicio <= :fim " +
             "ORDER BY r.periodoInicio DESC")
     List<Receita> findByUsuarioIdAndPeriodoBetween(
             @Param("usuarioId") Long usuarioId,
@@ -75,11 +76,12 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
     /**
      * Soma total de salários por período
+     * Considera receitas que tenham interseção com o período
      */
     @Query("SELECT COALESCE(SUM(r.salario), 0) FROM Receita r " +
             "WHERE r.usuario.id = :usuarioId " +
-            "AND r.periodoInicio >= :inicio " +
-            "AND r.periodoFim <= :fim")
+            "AND r.periodoFim >= :inicio " +
+            "AND r.periodoInicio <= :fim")
     BigDecimal sumSalarioByUsuarioIdAndPeriodo(
             @Param("usuarioId") Long usuarioId,
             @Param("inicio") LocalDate inicio,
@@ -88,11 +90,13 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
     /**
      * Soma total de receitas (salário + auxílios + serviços) por período
+     * CORRIGIDO: Considera receitas que tenham interseção com o período informado
+     * Exemplo: Receita de 21/out a 20/nov será contabilizada no dashboard de novembro
      */
     @Query("SELECT COALESCE(SUM(r.salario + r.auxilios + r.servicosExtras), 0) FROM Receita r " +
             "WHERE r.usuario.id = :usuarioId " +
-            "AND r.periodoInicio >= :inicio " +
-            "AND r.periodoFim <= :fim")
+            "AND r.periodoFim >= :inicio " +
+            "AND r.periodoInicio <= :fim")
     BigDecimal sumTotalReceitasByUsuarioIdAndPeriodo(
             @Param("usuarioId") Long usuarioId,
             @Param("inicio") LocalDate inicio,
@@ -113,12 +117,12 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
     /**
      * Verifica se existe receita no período para o usuário
+     * Considera sobreposição de períodos
      */
     @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Receita r " +
             "WHERE r.usuario.id = :usuarioId " +
-            "AND ((r.periodoInicio BETWEEN :inicio AND :fim) " +
-            "OR (r.periodoFim BETWEEN :inicio AND :fim) " +
-            "OR (:inicio BETWEEN r.periodoInicio AND r.periodoFim))")
+            "AND r.periodoFim >= :inicio " +
+            "AND r.periodoInicio <= :fim")
     boolean existsByUsuarioIdAndPeriodoOverlap(
             @Param("usuarioId") Long usuarioId,
             @Param("inicio") LocalDate inicio,

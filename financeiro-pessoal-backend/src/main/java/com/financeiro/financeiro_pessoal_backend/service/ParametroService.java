@@ -96,7 +96,7 @@ public class ParametroService {
      * Busca parâmetro por chave
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "parametros", key = "'chave_' + #chave + '_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "parametros", key = "'chave_' + #chave + '_' + @securityUtil.usuarioLogadoId")
     public ParametroResponseDTO findByChave(String chave) {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Buscando parâmetro por chave: {} do usuário: {}", chave, usuarioId);
@@ -170,7 +170,7 @@ public class ParametroService {
      * Lista todos os parâmetros do usuário
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "parametros", key = "'usuario_' + #root.target.securityUtil.usuarioLogadoId")
+    @Cacheable(value = "parametros", key = "'usuario_' + @securityUtil.usuarioLogadoId")
     public List<ParametroResponseDTO> findAllByUsuario() {
         Long usuarioId = securityUtil.getUsuarioLogadoId();
         log.debug("Listando parâmetros do usuário: {}", usuarioId);
